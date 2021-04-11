@@ -4,13 +4,11 @@ import Card from "react-bootstrap/cjs/Card";
 import Dropdown from "react-bootstrap/cjs/Dropdown";
 import Button from "react-bootstrap/cjs/Button";
 import IOElement from "./IOElement";
-import ObjectCRUD from "../../Scripts/UpdateObject";
 import DefaultState from "../../Scripts/CreateDefaultState";
 
 export default class HolderElement extends Component {
     state = {
         data : this.props.data,
-        IO : this.props.IO,
         id : this.props.id
     };
 
@@ -20,13 +18,21 @@ export default class HolderElement extends Component {
         const data = {...this.state.data};
         data.width = e.target.innerText + "%";
         this.setState({data});
+    };
 
+    updateName = (newIOState) => {
+        const data = {...this.state.data};
+        data.IOName = newIOState;
+        this.setState({data});
+    };
+
+    deleteElement = () => {
+        this.props.onUpdate(this.state);
     };
 
     render() {
 
-        const {name, width} = this.state.data;
-        const IO = this.state.IO.handleObjectGet();
+        const {width, IOName} = this.state.data;
 
         const dropdown = <Dropdown variant={"sm"}>
                             <Dropdown.Toggle variant="primary" id="dropdown-basic">
@@ -41,14 +47,14 @@ export default class HolderElement extends Component {
 
         return (
             <Draggable>
-                <Card className={"border-primary w-" + width}>
+                <Card className={"border-primary w-" + width.replace("%", "")}>
                     <Card.Header className="d-flex align-items-center justify-content-between">
-                        <IOElement data = {IO.data} id = {IO.id} key = {IO.id.toString()} onUpdate = {IO.handleObjectUpdate}/>
+                        <IOElement data = {IOName.data} id = {IOName.id} key = {IOName.id.toString()} onUpdate = {this.updateName}/>
                         {dropdown}
                     </Card.Header>
                     <Card.Body className = "d-flex flex-column bg-light">
                         {this.props.children}
-                        <Button className="float-left btn-sm mt-3" variant="danger" onClick={() => this.props.onDelete(this.state)}>Delete node</Button>
+                        <Button className="float-left btn-sm mt-3" variant="danger" onClick={this.deleteElement}>Delete node</Button>
                     </Card.Body>
                 </Card>
             </Draggable>

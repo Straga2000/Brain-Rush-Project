@@ -16,15 +16,15 @@ class App extends Component {
         NODElems : new List("NODES")
     }
 
-    componentDidMount() {
-        this.createNewNode();
-    }
+    createNode = () => {
+        const NODElems = this.state.NODElems;
+        console.log(this.state.NODElems)
+        const info = DefState.getDefaultNode(NODElems.getNewID());
 
-    createNewNode = () => {
-        const info = DefState.getDefaultNode(this.state.NODElems.getNewID());
-        const NODElems = this.state.NODElems.handleObjectCreate(info);
+        NODElems.handleObjectCreate(info); ///aici trb sa intoarcem in crud obiectul
+
         this.setState({NODElems});
-        console.log(info);
+        //console.log(info);
     }
 
     ///TODO use transitions for the notes https://react-bootstrap.netlify.app/utilities/transitions/
@@ -33,16 +33,16 @@ class App extends Component {
 
     render() {
 
-        const NODElems = this.state.NODElems.ListOfObjects;
-
+        const NODElems = this.state.NODElems;
+        //console.log(NODElems);
         return (
             <div className={"w-100"}>
 
-                <Button onClick={this.createNewNode}>New Note</Button>
+                <Button onClick={this.createNode}>New Note</Button>
                 {
-                    (NODElems !== undefined) ?
-                        NODElems.map((elem) =>
-                        <HolderElement data = {elem.data} id = {elem.id} key = {elem.id.toString()} IO = {elem.IO}>
+                    (NODElems.length !== 0) ?
+                        NODElems.ListOfObjects.map((elem) =>
+                        <HolderElement data = {elem.data} id = {elem.id} key = {elem.id.toString()} IO = {elem.IO} onUpdate = {(newState) =>{NODElems.handleObjectDelete(newState)}}>
                             <div>We are good</div>
                         </HolderElement>) : null
 

@@ -1,0 +1,4 @@
+
+    TODO use transitions for the notes https://react-bootstrap.netlify.app/utilities/transitions/
+    TODO Create a "Are u sure?" dialog with the user https://react-bootstrap.github.io/components/modal/
+    TODO https://reactjsexample.com/draw-a-line-between-two-elements-in-react/ lines between posts

@@ -1,6 +1,3 @@
-import ObjectCRUD from "./UpdateObject";
-import CRUD from "./CRUD";
-
 export default class DefaultState {
 
     getDefaultIO = (id) => {
@@ -11,13 +8,9 @@ export default class DefaultState {
     };
 
     getDefaultNode = (id) => {
-
-        const IOElem = new ObjectCRUD(0);
-        IOElem.handleObjectCreate(this.getDefaultIO(0));
-        IOElem.virtualObject.data.text = "New node";
+        const IOInfo = this.getDefaultIO(0);
         return {
-            data :  {name : "New node", width : "25%"},
-            IO : IOElem,
+            data :  {IOName : IOInfo, width : "25%"},
             id : id
         };
     };
