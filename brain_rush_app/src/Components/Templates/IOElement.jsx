@@ -4,7 +4,6 @@ import FormControl from "react-bootstrap/FormControl";
 import Card from "react-bootstrap/Card";
 
 import {renderConditional} from "../../Scripts/reactUtilities";
-import {styleUtilities} from "../../Scripts/styleUtilities";
 
 export default class IOElement extends Component{
 

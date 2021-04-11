@@ -1,13 +1,14 @@
-
 export default class List
 {
     constructor(IDElem = "") {
         this.ListOfObjects = [];
         this.IDElem = IDElem;
+        this.counter = 0;
     }
 
     handleObjectCreate = (newObject) => {
         this.ListOfObjects.push(newObject);
+        this.counter++;
         return this.ListOfObjects;
     };
 
@@ -25,4 +26,7 @@ export default class List
         return this.ListOfObjects.filter((elem) => elem.id === id)[0];
     };
 
+    getNewID = () => {
+        return this.counter + 1;
+    }
 }
