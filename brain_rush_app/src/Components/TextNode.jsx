@@ -1,9 +1,6 @@
 import React, {Component} from 'react';
-
-import CRUD from "../Scripts/CRUD";
 import CreateDefaultState from "../Scripts/CreateDefaultState";
 import Button from "react-bootstrap/Button";
-import Card from "react-bootstrap/cjs/Card";
 import IOElement from "./Templates/IOElement";
 import HolderElement from "./Templates/HolderElement";
 

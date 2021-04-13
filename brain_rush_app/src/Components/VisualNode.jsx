@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
 import VisualURLElement from "./Templates/VisualURLElement";
-import IOElement from "./Templates/IOElement";
-import Button from "react-bootstrap/Button";
 import HolderElement from "./Templates/HolderElement";
 
 export default class VisualNode extends Component {

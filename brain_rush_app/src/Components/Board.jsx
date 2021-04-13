@@ -24,8 +24,8 @@ export default class Board extends Component {
     DefState = new DefaultState();
 
     state = {
-        TextNodeList : new List("textnodes"),
-        VisualNodeList: new List("visualnodes")
+        TextNodeList : new List("TextNodeList"),
+        VisualNodeList: new List("VisualNodeList")
     };
 
     createArrayObj = (arrayName, defState) => {
