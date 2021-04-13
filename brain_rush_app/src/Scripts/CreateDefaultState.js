@@ -44,4 +44,23 @@ export default class DefaultState {
             id: id
         };
     };
+
+    getDefaultPropertyElement = (id) => {
+        const IOTerm = this.getDefaultIO(0);
+        const IODefinition = this.getDefaultIO(1);
+
+        return {
+            data : {term : IOTerm, def : IODefinition},
+            id : id
+        }
+    };
+
+    getDefaultPropertyNode = (id) => {
+        const propertyList = new List("propertyList");
+
+        return {
+          data : {propertyList : propertyList},
+          id : id
+        };
+    };
 }
