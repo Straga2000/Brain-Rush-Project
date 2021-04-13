@@ -15,9 +15,8 @@ export default class IOElement extends Component{
     onTextChange = (e) =>
     {
         const data = {...this.state.data};
-        data.text = e.target.value;
-        data.isSelected = false;
-        this.setState({data : data});
+        data.text = e.target.value === "" ? data.text : e.target.value;
+        this.setState({data});
         this.props.onUpdate(this.state);
         //console.log(this.props.data);
     };
@@ -27,7 +26,15 @@ export default class IOElement extends Component{
         const data = {...this.state.data};
         data.isSelected = true;
         this.setState({data});
+        this.props.onUpdate(this.state);
         //console.log(this.props.data);
+    };
+
+    onInputUnchange = () => {
+        const data = {...this.state.data};
+        data.isSelected = false;
+        this.setState({data});
+        this.props.onUpdate(this.state);
     };
 
     onInputInit = (e) =>
@@ -39,11 +46,14 @@ export default class IOElement extends Component{
     render() {
         const {isSelected, text} = this.state.data;
 
-        let inputElem = <InputGroup  className = "p-0 border-0" onBlur={this.onTextChange} onClick={this.onInputInit}>
-                            <FormControl className = "p-0 border-0" placeholder = {text} as = "textarea"/>
+        let inputElem = <InputGroup className = "p-0 border-0 w-100 input-group-sm" onMouseLeave = {this.onInputUnchange} onChange = {this.onTextChange} onClick={this.onInputInit}>
+                            <FormControl className = "p-0 border-0 form-control" placeholder = {text} as = "textarea"/>
                         </InputGroup>;
 
-        let textElem = <Card body className="p-0 border-0" onClick={this.onInputChange}>{renderConditional(text, "Write something...", (text !== ""))}</Card>;
+        let textElem = <Card.Title className="p-0 border-0 w-100" onMouseEnter={this.onInputChange} onMouseLeave={this.onInputUnchange}>
+            {renderConditional(<h5 className={"font-weight-light"}>{text}</h5>,
+                               <h5 className={"font-weight-light"}>Write something...</h5>, (text !== ""))}
+                       </Card.Title>;
 
         return (
             <React.Fragment>

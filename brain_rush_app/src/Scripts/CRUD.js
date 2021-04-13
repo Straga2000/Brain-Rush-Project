@@ -13,7 +13,7 @@ export default class List
     };
 
     handleObjectDelete = (newObject) => {
-        this.ListOfObjects.filter((elem) => elem !== newObject);
+        this.ListOfObjects.filter((elem) => elem.id !== newObject.id);
         return this.ListOfObjects;
     };
 

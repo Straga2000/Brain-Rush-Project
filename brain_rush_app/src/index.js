@@ -4,9 +4,9 @@ import ReactDOM from 'react-dom';
 ///MAIN PAGE FOR TEMPLATE-REACT PAGE
 
 ///RENDER MAIN ELEMENT
-import App from './Components/App';
+import Board from "./Components/Board";
 
 ReactDOM.render(
-    <App/>,
+    <Board/>,
     document.getElementById('root')
 );

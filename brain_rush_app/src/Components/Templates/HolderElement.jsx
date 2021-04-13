@@ -4,7 +4,6 @@ import Card from "react-bootstrap/cjs/Card";
 import Dropdown from "react-bootstrap/cjs/Dropdown";
 import Button from "react-bootstrap/cjs/Button";
 import IOElement from "./IOElement";
-import DefaultState from "../../Scripts/CreateDefaultState";
 
 export default class HolderElement extends Component {
     state = {
@@ -13,29 +12,29 @@ export default class HolderElement extends Component {
     };
 
     setWidth = (e) => {
-
-        //console.log();
         const data = {...this.state.data};
-        data.width = e.target.innerText + "%";
+        data.width = e.target.innerText;
         this.setState({data});
+        this.props.onUpdate(this.state);
     };
 
     updateName = (newIOState) => {
         const data = {...this.state.data};
         data.IOName = newIOState;
         this.setState({data});
+        this.props.onUpdate(this.state);
     };
 
     deleteElement = () => {
-        this.props.onUpdate(this.state);
+        this.props.onDelete();
     };
 
     render() {
 
         const {width, IOName} = this.state.data;
 
-        const dropdown = <Dropdown variant={"sm"}>
-                            <Dropdown.Toggle variant="primary" id="dropdown-basic">
+        const dropdown = <Dropdown className="flex-row-reverse mt-1 mb-1 mr-1">
+                            <Dropdown.Toggle variant="secondary" id="dropdown-basic" size="sm">
                                 Width
                             </Dropdown.Toggle>
                             <Dropdown.Menu>
@@ -48,13 +47,13 @@ export default class HolderElement extends Component {
         return (
             <Draggable>
                 <Card className={"border-primary w-" + width.replace("%", "")}>
-                    <Card.Header className="d-flex align-items-center justify-content-between">
-                        <IOElement data = {IOName.data} id = {IOName.id} key = {IOName.id.toString()} onUpdate = {this.updateName}/>
+                    <Card.Header className="d-flex align-items-center flex-wrap-reverse">
+                        {/*<IOElement className="mb-1 mt-sm-3 mr-1" data = {IOName.data} id = {IOName.id} key = {IOName.id.toString()} onUpdate = {this.updateName}/>*/}
                         {dropdown}
                     </Card.Header>
                     <Card.Body className = "d-flex flex-column bg-light">
                         {this.props.children}
-                        <Button className="float-left btn-sm mt-3" variant="danger" onClick={this.deleteElement}>Delete node</Button>
+                        <Button className="float-left mt-3 btn-sm" variant="danger" onClick={this.deleteElement}>Delete node</Button>
                     </Card.Body>
                 </Card>
             </Draggable>
