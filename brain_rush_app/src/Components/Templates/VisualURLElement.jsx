@@ -18,16 +18,23 @@ export default class VisualURLElement extends Component {
         ///console.log(data.url.data);
     };
 
+    updateVisibility = (e, value) => {
+        e.target.hidden = !value;
+
+        const data = {...this.state.data};
+        data.isVisible = value;
+
+        this.setState({data});
+        this.props.onUpdate(this.state);
+    };
+
     render() {
         const url = this.state.data.url;
-        console.log(url);
         return (
             <div>
-                {/*{renderConditional(*/}
-                {/* <Image src={url.data.text} onError={this.updateLinkByBlank} fluid/>,*/}
-                {/* <h5 className="text-primary font-weight-bold">BROKEN LINK</h5>, (url === ""))}*/}
-                <Image src={url.data.text} fluid/>
-                 {/*{(url !== "") ? <Image src={url.data.text} fluid/> : <h5 className="text-primary font-weight-bold">BROKEN PHOTO</h5>}*/}
+                <Image src={url.data.text} onError = {(e) => this.updateVisibility(e, false)}
+                                           onLoad = {(e) => this.updateVisibility(e, true)} fluid/>
+
                 <IOElement data = {url.data} id = {url.id} key = {url.id.toString()} onUpdate={(newState) => this.updateLink(newState)}/>
             </div>
         );

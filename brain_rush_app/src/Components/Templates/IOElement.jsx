@@ -51,8 +51,8 @@ export default class IOElement extends Component{
                         </InputGroup>;
 
         let textElem = <Card.Title className="p-0 border-0 w-100" onMouseEnter={this.onInputChange} onMouseLeave={this.onInputUnchange}>
-            {renderConditional(<h5 className={"font-weight-light"}>{text}</h5>,
-                               <h5 className={"font-weight-light"}>Write something...</h5>, (text !== ""))}
+            {renderConditional(<small className={"font-weight-light"}>{text}</small>,
+                               <small className={"font-weight-light"}>Write something...</small>, (text !== ""))}
                        </Card.Title>;
 
         return (

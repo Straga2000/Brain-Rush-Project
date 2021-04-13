@@ -23,56 +23,57 @@ export default class Board extends Component {
 
     DefState = new DefaultState();
 
-
     state = {
-        IOElems : new List("IO"),
-        NODElems : new List("NODES"),
         TextNodeList : new List("textnodes"),
         VisualNodeList: new List("visualnodes")
     };
 
-    createTextNode = () => {
-        const TextNodeList = this.state.TextNodeList;
-        const text = this.DefState.getDefaultTextNode(TextNodeList.getNewID());
+    createArrayObj = (arrayName, defState) => {
+        const arrObj = this.state[arrayName];
+        const init = defState(arrObj.getNewID());
 
-        TextNodeList.handleObjectCreate(text);
-        this.setState({TextNodeList});
-        //console.log(TextNodeList);
+        arrObj.handleObjectCreate(init);
+
+        const dict = {};
+        dict[arrayName] = arrObj;
+
+        this.setState(dict);
     };
 
-    deleteTextNode = (foundState) => {
-        const TextNodeList = this.state.TextNodeList;
-        TextNodeList.handleObjectDelete(foundState);
+    deleteArrayObj = (arrayName, foundState) => {
+        const arrObj = this.state[arrayName];
+        arrObj.handleObjectDelete(foundState);
 
-        this.setState({TextNodeList});
-        //console.log(TextNodeList.ListOfObjects.length)
+        const dict = {};
+        dict[arrayName] = arrObj;
+
+        this.setState(dict);
     };
 
-    updateTextNode = (newState) => {
-      const TextNodeList = this.state.TextNodeList;
-      TextNodeList.handleObjectUpdate(newState);
+    updateArrayObj = (arrayName, newState) => {
+      const arrayObj = this.state[arrayName];
+      arrayObj.handleObjectUpdate(newState);
 
-      console.log(TextNodeList.ListOfObjects);
-      this.setState({TextNodeList});
+      const dict = {};
+      dict[arrayName] = arrayObj;
+
+      this.setState(dict);
+    };
+
+    printVisualNode = (elem) => {
+        return <VisualNode data={elem.data}
+                           id = {elem.id}
+                           key = {elem.id.toString()}
+                           onDelete = {(foundState) => this.deleteArrayObj("VisualNodeList", foundState)}
+                           onUpdate = {(newState) => this.updateArrayObj("VisualNodeList", newState)}/>
     };
 
     printTextNode = (elem) => {
         return <TextNode data = {elem.data}
                          id = {elem.id}
                          key = {elem.id.toString()}
-                         onDelete = {(foundState) => this.deleteTextNode(foundState)}
-                         onUpdate = {(newState) => this.updateTextNode(newState)}/>
-    };
-
-    createNode = () => {
-        const NODElems = this.state.NODElems;
-        //console.log(this.state.NODElems);
-        const info = this.DefState.getDefaultNode(NODElems.getNewID());
-
-        NODElems.handleObjectCreate(info); ///aici trb sa intoarcem in crud obiectul
-
-        this.setState({NODElems});
-        //console.log(info);
+                         onDelete = {(foundState) => this.deleteArrayObj("TextNodeList", foundState)}
+                         onUpdate = {(newState) => this.updateArrayObj("TextNodeList", newState)}/>
     };
 
     render() {
@@ -80,34 +81,23 @@ export default class Board extends Component {
         const navBar = <Navbar bg="dark" variant="dark">
                             <Navbar.Brand>BrainRush</Navbar.Brand>
                             <Nav className="mr-auto">
-                                <Nav.Link onClick ={this.createNode}>Get note</Nav.Link>
-                                <Nav.Link onClick ={this.createTextNode}>Text</Nav.Link>
+                                <Nav.Link onClick ={() => {this.createArrayObj("TextNodeList", this.DefState.getDefaultTextNode)}}>Text</Nav.Link>
+                                <Nav.Link onClick ={() => {this.createArrayObj("VisualNodeList", this.DefState.getDefaultVisualNode)}}>Visual</Nav.Link>
                                 <Nav.Link href="#pricing">Pricing</Nav.Link>
                             </Nav>
-                            {/*<Form inline>*/}
-                            {/*    <FormControl type="text" placeholder="Search" className="mr-sm-2" />*/}
-                            {/*    <Button variant="outline-info">Search</Button>*/}
-                            {/*</Form>*/}
                       </Navbar>;
 
-        const NODElems = this.state.NODElems;
         const TextNodeList = this.state.TextNodeList;
-        //console.log(NODElems);
+        const VisualNodeList = this.state.VisualNodeList;
 
         return (
             <div className={"w-100"}>
-                {/*<Button onClick={this.createNode}>New Note</Button>*/}
                 {navBar}
                 {
-                    NODElems.ListOfObjects.map((elem) =>
-                        <HolderElement data = {elem.data} id = {elem.id} key = {elem.id.toString()} onDelete = {(newState) =>{NODElems.handleObjectDelete(newState)}}>
-                            <div>We are good</div>
-                        </HolderElement>)
-                    //this.state.IOElems.ListOfObjects.map((elem) =>
-                    //    <IOElement data = {elem.data} id = {elem.id} key = {elem.id.toString()} onUpdate={this.state.IOElems.handleObjectUpdate}></IOElement>)
+                    TextNodeList.ListOfObjects.map((elem) => this.printTextNode(elem))
                 }
                 {
-                    TextNodeList.ListOfObjects.map((elem) => this.printTextNode(elem))
+                    VisualNodeList.ListOfObjects.map((elem) => this.printVisualNode(elem))
                 }
             </div>
         );

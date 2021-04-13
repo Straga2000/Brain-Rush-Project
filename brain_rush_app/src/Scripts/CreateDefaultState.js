@@ -31,12 +31,12 @@ export default class DefaultState {
     getDefaultVisualURLNode = (id) => {
         const url = this.getDefaultIO(0);
         return {
-          data : {url : url},
+          data : {url : url, isVisible : true},
           id : id
         };
     };
 
-    getVisualNode = (id) => {
+    getDefaultVisualNode = (id) => {
         const image = this.getDefaultVisualURLNode(0);
         const defaultNode = this.getDefaultNode(1);
         return {
